@@ -14,5 +14,7 @@ namespace MoreIsLess_dZ
         public float floatXPMulti = 0.9f;
         public bool XPCap = true;
         public int XPMax = 60000;
+
+        public bool AlwaysOn = true;
     }
 }

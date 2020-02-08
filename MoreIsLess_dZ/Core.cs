@@ -70,7 +70,7 @@ namespace MoreIsLess_dZ
     {
         private static void Prefix(AAR_UnitStatusWidget __instance, ref int xpEarned, SimGameState ___simState, UnitResult ___UnitData)
         {
-            if (___simState.Constants.Story.MaximumDebt == 42)
+            if (___simState.Constants.Story.MaximumDebt == 42 || Core.Settings.AlwaysOn)
             {
                 var totalXP = ___UnitData.pilot.TotalXP;
 
