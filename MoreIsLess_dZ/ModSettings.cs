@@ -17,7 +17,7 @@ namespace MoreIsLess_dZ
 
         public bool AlwaysOn = true;
 
-        public bool PanicEjections;
+        public bool PanicEjections = false;
         public double XP_MechKill = 0;
         public double XP_VehicleKill = 0;
         public double XP_MechEjection = 0;
