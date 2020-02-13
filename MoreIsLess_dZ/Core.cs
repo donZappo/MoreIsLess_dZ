@@ -73,6 +73,21 @@ namespace MoreIsLess_dZ
             if (___simState.Constants.Story.MaximumDebt == 42 || Core.Settings.AlwaysOn)
             {
                 var totalXP = ___UnitData.pilot.TotalXP;
+                var mechsKilled = ___UnitData.pilot.MechsKilled;
+                var vehiclesKilled = ___UnitData.pilot.OthersKilled;
+
+                // get the total ejections - Dependent on Panic System. Thanks gnivler! 
+                int? mechEjections = 0;
+                int? vehicleEjections = 0;
+
+                if (Core.Settings.PanicEjections)
+                {
+                    mechEjections = ___UnitData.pilot.StatCollection.GetStatistic("MechsEjected")?.Value<int>();
+                    vehicleEjections = ___UnitData.pilot.StatCollection.GetStatistic("VehiclesEjected")?.Value<int>();
+                }
+
+                totalXP = (int)(mechsKilled * Core.Settings.XP_MechKill + vehiclesKilled * Core.Settings.XP_VehicleKill +
+                    mechEjections * Core.Settings.XP_MechEjection + vehicleEjections * Core.Settings.XP_VehicleEjection);
 
                 int totalXPChunks = totalXP / Core.Settings.intPerXP;
                 float NewXP = (float)xpEarned;
