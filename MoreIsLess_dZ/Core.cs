@@ -73,21 +73,51 @@ namespace MoreIsLess_dZ
             if (___simState.Constants.Story.MaximumDebt == 42 || Core.Settings.AlwaysOn)
             {
                 var totalXP = ___UnitData.pilot.TotalXP;
-                var mechsKilled = ___UnitData.pilot.MechsKilled;
-                var vehiclesKilled = ___UnitData.pilot.OthersKilled;
+
+                var mechsKilled = 0;
+                var vehiclesKilled = 0;
+
+                try
+                {
+                    mechsKilled = ___UnitData.pilot.MechsKilled;
+                    vehiclesKilled = ___UnitData.pilot.OthersKilled;
+                }
+                catch (Exception e)
+                {
+                    Log("Mech/Vehicle XP");
+                    Error(e);
+                }
+
+                Log(___UnitData.pilot.Callsign);
+                Logger.Log("Mechs Killed:" + mechsKilled);
+                Logger.Log("Vehicles Killed:" + vehiclesKilled);
 
                 // get the total ejections - Dependent on Panic System. Thanks gnivler! 
                 int? mechEjections = 0;
                 int? vehicleEjections = 0;
 
-                if (Core.Settings.PanicEjections)
+                try
                 {
-                    mechEjections = ___UnitData.pilot.StatCollection.GetStatistic("MechsEjected")?.Value<int>();
-                    vehicleEjections = ___UnitData.pilot.StatCollection.GetStatistic("VehiclesEjected")?.Value<int>();
+                    if (Core.Settings.PanicEjections)
+                    {
+                        mechEjections = ___UnitData.pilot.StatCollection.GetStatistic("MechsEjected")?.Value<int>();
+                        vehicleEjections = ___UnitData.pilot.StatCollection.GetStatistic("VehiclesEjected")?.Value<int>();
+                    }
+                }
+                catch ( Exception e)
+                {
+                    Log("Mech/vehicleEjections");
+                    Error(e);
                 }
 
-                totalXP = (int)(mechsKilled * Core.Settings.XP_MechKill + vehiclesKilled * Core.Settings.XP_VehicleKill +
+                Logger.Log("Mechs Ejected:" + mechEjections);
+                Logger.Log("Vehicles Ejected:" + vehicleEjections);
+
+                Logger.Log("Before XP:" + totalXP);
+                totalXP += (int)(mechsKilled * Core.Settings.XP_MechKill + vehiclesKilled * Core.Settings.XP_VehicleKill +
                     mechEjections * Core.Settings.XP_MechEjection + vehicleEjections * Core.Settings.XP_VehicleEjection);
+                Log("After XP added:" + totalXP);
+                Log("----------------------");
 
                 int totalXPChunks = totalXP / Core.Settings.intPerXP;
                 float NewXP = (float)xpEarned;
