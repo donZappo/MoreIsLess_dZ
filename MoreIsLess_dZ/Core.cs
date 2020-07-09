@@ -80,8 +80,8 @@ namespace MoreIsLess_dZ
 
                 try
                 {
-                    //mechsKilled = ___UnitData.pilot.MechsKilled;
-                    //vehiclesKilled = ___UnitData.pilot.OthersKilled;
+                    mechsKilled = ___UnitData.pilot.MechsKilled;
+                    vehiclesKilled = ___UnitData.pilot.OthersKilled;
                 }
                 catch (Exception e)
                 {
@@ -95,8 +95,8 @@ namespace MoreIsLess_dZ
                 {
                     if (Core.Settings.PanicEjections)
                     {
-                        //mechEjections = ___UnitData.pilot.StatCollection.GetStatistic("MechsEjected").Value<int>();
-                        //vehicleEjections = ___UnitData.pilot.StatCollection.GetStatistic("VehiclesEjected").Value<int>();
+                        mechEjections = ___UnitData.pilot.StatCollection.GetStatistic("MechsEjected").Value<int>();
+                        vehicleEjections = ___UnitData.pilot.StatCollection.GetStatistic("VehiclesEjected").Value<int>();
                     }
                 }
                 catch ( Exception e)
